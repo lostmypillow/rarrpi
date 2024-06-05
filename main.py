@@ -18,7 +18,7 @@ while True:
     serm = read_ser.decode('utf-8')
     ser.write(status_code.encode())
     if serm != "":
-        uid = serm
+        uid = serm.strip()
         print(f"Extracted UID: {uid}")
 
         try:
