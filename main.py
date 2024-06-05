@@ -26,6 +26,7 @@ def sendAttempt(n):
 
 while True:
     ser.write(status_code.encode())
+    ser.write("")
     print("sent status code " + status_code)
     read_ser = ser.readline()
     uid = read_ser.decode('utf-8').strip()
