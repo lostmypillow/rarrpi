@@ -41,6 +41,6 @@ while True:
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
 
-    ser.write(status_code)
+    ser.write(status_code.encode())
     time.sleep(1)
 
