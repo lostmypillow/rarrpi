@@ -45,17 +45,29 @@ def tryif():
 
 
 while True:
-    
+    ser.write(status_code.encode())
+    print("sent status code " + status_code)
     read_ser = ser.readline()
     uid = read_ser.decode('utf-8').strip()
     print(f"Extracted UID: {uid}")
     if uid != "":
-        tryif()
-        if tryif() == True:
-            status_code = "9"
-        else:
-            status_code = "0"
+        try:
+            response = requests.get(f"{BASE_URL}/card/{uid}")
+            response_data = response.json()
+
+            if response.status_code == 200 and "card_val" in response_data:
+                sendAttempt("yes")
+                status_code = "9"
 
 
-    ser.write(status_code.encode())
-    print("sent status code " + status_code)
+            else:
+                sendAttempt("no")
+                status_code = "0"
+                
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        
+
+
