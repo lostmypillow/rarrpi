@@ -31,7 +31,7 @@ while True:
                 status_code = "9"
 
             else:
-                attempt_response = requests.post(f"{BASE_URL}/attempt?successfornot=False")
+                attempt_response = requests.post(f"{BASE_URL}/attempt?successornot=False")
                 print(f"Attempt logged: {attempt_response.json()}")
                 status_code = "0"
 
