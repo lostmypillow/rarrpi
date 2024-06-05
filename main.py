@@ -9,14 +9,11 @@ ser.baudrate = 9600
 # Define the base URL for your Django backend
 BASE_URL = "https://rarserver.lostmypillow.duckdns.org/api"
 
-status_code = "1"
-
-
 while True:
-    
+
     read_ser = ser.readline()
     serm = read_ser.decode('utf-8')
-    ser.write(status_code.encode())
+    
     if serm != "":
         uid = serm.strip()
         print(f"Extracted UID: {uid}")
@@ -30,6 +27,7 @@ while True:
                 print(f"Attempt logged: {attempt_response.json()}")
                 status_code = "9"
 
+
             else:
                 attempt_response = requests.post(f"{BASE_URL}/attempt?successornot=False")
                 print(f"Attempt logged: {attempt_response.json()}")
@@ -39,3 +37,4 @@ while True:
             print(f"An error occurred: {e}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
+    ser.write(status_code.encode())
