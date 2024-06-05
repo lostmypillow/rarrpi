@@ -20,26 +20,6 @@ def sendAttempt(n):
         attempt_response = requests.post(f"{BASE_URL}/attempt?successornot=False")
         print(f"Attempt logged: {attempt_response.json()}")
 
-        
-def tryif():
-    try:
-        response = requests.get(f"{BASE_URL}/card/{uid}")
-        response_data = response.json()
-
-        if response.status_code == 200 and "card_val" in response_data:
-            sendAttempt("yes")
-            
-            return True
-
-        else:
-            sendAttempt("no")
-            status_code = "0"
-            return False
-
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
 
 
 
@@ -63,7 +43,7 @@ while True:
             else:
                 sendAttempt("no")
                 status_code = "0"
-                
+
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
         except Exception as e:
