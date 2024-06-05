@@ -16,7 +16,7 @@ while True:
     
     read_ser = ser.readline()
     serm = read_ser.decode('utf-8')
-    
+    ser.write(status_code.encode())
     if "Card UID: " in serm:
         uid = serm.split("Card UID: ")[1].strip()
         print(f"Extracted UID: {uid}")
@@ -26,13 +26,12 @@ while True:
             response_data = response.json()
 
             if response.status_code == 200 and "card_val" in response_data:
-                attempt_response = requests.post(f"{BASE_URL}/attempt", json={"successful": True})
+                attempt_response = requests.post(f"{BASE_URL}/attempt?successornot=True")
                 print(f"Attempt logged: {attempt_response.json()}")
                 status_code = "9"
 
-
             else:
-                attempt_response = requests.post(f"{BASE_URL}/attempt", json={"successful": False})
+                attempt_response = requests.post(f"{BASE_URL}/attempt?successfornot=False")
                 print(f"Attempt logged: {attempt_response.json()}")
                 status_code = "0"
 
@@ -40,7 +39,3 @@ while True:
             print(f"An error occurred: {e}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
-
-    ser.write(status_code.encode())
-    time.sleep(1)
-
