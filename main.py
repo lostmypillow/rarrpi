@@ -2,11 +2,9 @@ import serial
 import requests
 import time
 
-# Initialize the serial connection to the Arduino
 ser = serial.Serial("/dev/ttyACM0", 9600)
 ser.baudrate = 9600
 
-# Define the base URL for your Django backend
 BASE_URL = "https://rarserver.lostmypillow.duckdns.org/api"
 
 while True:
